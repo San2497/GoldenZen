@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Tým | Golden Zen Spa</title>
+    <meta name="description"
+        content="Poznajte náš tým odborníků a přečtěte si nejnovější články o wellness, kráse a relaxaci.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        espresso: { DEFAULT: '#4d3621', light: '#6b4e35', dark: '#3d2b1a' },
+                        gold: { DEFAULT: '#c6a267', light: '#d4b880', dark: '#b08c4f' },
+                        cream: '#faf7f2',
+                        charcoal: '#111111',
+                    },
+                    fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #faf7f2;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c6a267;
+            border-radius: 4px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim-fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .anim-fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-glass {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(198, 162, 103, 0.15);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #c6a267;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .blog-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(77, 54, 33, 0.12);
+        }
+
+        .team-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(77, 54, 33, 0.15);
+        }
+
+        .team-card:hover .team-img {
+            transform: scale(1.05);
+        }
+
+        .team-img {
+            transition: transform 0.6s ease;
+        }
+
+        .tag-pill {
+            transition: all 0.3s ease;
+        }
+
+        .tag-pill:hover {
+            background-color: #c6a267;
+            color: white;
+            border-color: #c6a267;
+        }
+
+        .active-filter {
+            background-color: #c6a267 !important;
+            color: white !important;
+            border-color: #c6a267 !important;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-cream font-sans text-charcoal overflow-x-hidden">
+
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass">
+        <div class="max-w-[1400px] mx-auto px-8 lg:px-20 py-5 flex items-center justify-between">
+            <a href="goldenzen-upgraded.html"
+                class="flex flex-col items-center justify-center cursor-pointer group z-50">
+                <div class="text-gold flex flex-col items-center">
+                    <svg width="48" height="42" viewBox="0 0 100 100"
+                        class="fill-current mb-1 group-hover:scale-110 transition-transform duration-500">
+                        <path d="M15,40 L25,65 L35,45 L50,70 L65,45 L75,65 L85,40 L85,30 L15,30 Z" opacity="0.8" />
+                        <path
+                            d="M50,85 C30,85 20,70 20,50 C20,30 35,15 50,15 C60,15 70,20 75,30 L65,35 C60,28 55,25 50,25 C40,25 30,35 30,50 C30,65 40,75 50,75 C58,75 65,70 68,60 L50,60 L50,50 L80,50 C80,70 65,85 50,85 Z" />
+                    </svg>
+                    <span class="font-serif tracking-[0.15em] text-[17px] uppercase font-semibold leading-tight">Golden
+                        Zen</span>
+                    <span class="text-[0.45rem] tracking-[0.2em] uppercase opacity-70 mt-0.5 font-medium">Massage, Hair
+                        & Skin Care</span>
+                </div>
+            </a>
+            <div
+                class="hidden lg:flex items-center space-x-12 text-[14px] font-serif font-light text-charcoal/80 tracking-[0.25em] uppercase ml-auto mr-12">
+                <a href="goldenzen-upgraded.html"
+                    class="nav-link hover:text-gold transition-colors duration-300">Domů</a>
+                <a href="#tym" class="nav-link hover:text-gold transition-colors duration-300">Tým</a>
+                <a href="#clanky" class="nav-link hover:text-gold transition-colors duration-300">Články</a>
+            </div>
+            <a href="goldenzen-upgraded.html"
+                class="hidden lg:inline-block bg-[#cba874] text-espresso px-10 py-3.5 font-serif text-[14px] tracking-[0.25em] font-light uppercase border border-[#cba874] hover:bg-transparent hover:text-[#cba874] transition-all duration-500 shadow-sm hover:shadow-lg">
+                ← Zpět na web
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="pt-36 pb-20 bg-gradient-to-b from-white to-cream relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-80 h-80 bg-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2">
+        </div>
+        <div class="max-w-[1400px] mx-auto px-8 lg:px-20 text-center">
+            <span class="text-gold font-semibold text-[11px] tracking-[0.3em] uppercase">Golden Zen Spa</span>
+            <h1 class="font-serif italic text-[2.8rem] lg:text-[4rem] text-charcoal mt-3 leading-tight"
+                style="animation: fadeUp 1s 0.2s cubic-bezier(0.16,1,0.3,1) both;">Blog & Náš tým</h1>
+            <p class="text-gray-500 max-w-2xl mx-auto mt-5 text-[16px] leading-relaxed font-light"
+                style="animation: fadeUp 1s 0.4s cubic-bezier(0.16,1,0.3,1) both;">Poznejte naše odborníky a přečtěte si
+                tipy z oblasti wellness, krásy a relaxace.</p>
+            <div class="w-16 h-[2px] bg-gold mx-auto mt-8"></div>
+        </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section id="tym" class="py-24 bg-cream">
+        <div class="max-w-[1400px] mx-auto px-8 lg:px-20">
+            <div class="text-center mb-16 anim-fade-up">
+                <span class="text-gold font-semibold text-[11px] tracking-[0.2em] uppercase">Náš tým</span>
+                <h2 class="font-serif italic text-[2.5rem] lg:text-[3.2rem] text-charcoal mt-3 leading-tight">Odborníci,
+                    kterým můžete věřit</h2>
+                <div class="w-16 h-[2px] bg-[#e6d0a7] mx-auto mt-6"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Member 1 -->
+                <div class="team-card bg-white rounded-2xl overflow-hidden shadow-md anim-fade-up">
+                    <div class="h-[280px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&q=80" alt="Nattaya"
+                            class="team-img w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h4 class="font-serif text-xl text-charcoal font-semibold">Nattaya</h4>
+                        <p class="text-gold text-[12px] tracking-[0.2em] uppercase font-semibold mt-1">Hlavní masérka
+                        </p>
+                        <p class="text-gray-400 text-[13px] mt-3 leading-relaxed font-light">Certifikovaná thajská
+                            masérka s 12 lety zkušeností. Specialistka na tradiční thajskou masáž.</p>
+                    </div>
+                </div>
+                <!-- Member 2 -->
+                <div class="team-card bg-white rounded-2xl overflow-hidden shadow-md anim-fade-up"
+                    style="transition-delay:0.1s">
+                    <div class="h-[280px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80"
+                            alt="Lucie Dvořáková" class="team-img w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h4 class="font-serif text-xl text-charcoal font-semibold">Lucie Dvořáková</h4>
+                        <p class="text-gold text-[12px] tracking-[0.2em] uppercase font-semibold mt-1">Kosmetička</p>
+                        <p class="text-gray-400 text-[13px] mt-3 leading-relaxed font-light">Odbornice na anti-aging
+                            terapie a léčbu problematické pleti. Držitelka ocenění „Zlaté ručičky".</p>
+                    </div>
+                </div>
+                <!-- Member 3 -->
+                <div class="team-card bg-white rounded-2xl overflow-hidden shadow-md anim-fade-up"
+                    style="transition-delay:0.2s">
+                    <div class="h-[280px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
+                            alt="Tomáš Novák" class="team-img w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h4 class="font-serif text-xl text-charcoal font-semibold">Tomáš Novák</h4>
+                        <p class="text-gold text-[12px] tracking-[0.2em] uppercase font-semibold mt-1">Kadeřník & Barber
+                        </p>
+                        <p class="text-gray-400 text-[13px] mt-3 leading-relaxed font-light">Mistr střihu s citem pro
+                            moderní trendy. Specializace na pánské střihy a precizní úpravu vousů.</p>
+                    </div>
+                </div>
+                <!-- Member 4 -->
+                <div class="team-card bg-white rounded-2xl overflow-hidden shadow-md anim-fade-up"
+                    style="transition-delay:0.3s">
+                    <div class="h-[280px] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Somchai"
+                            class="team-img w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h4 class="font-serif text-xl text-charcoal font-semibold">Somchai</h4>
+                        <p class="text-gold text-[12px] tracking-[0.2em] uppercase font-semibold mt-1">Masérka</p>
+                        <p class="text-gray-400 text-[13px] mt-3 leading-relaxed font-light">Expertka na olejové masáže
+                            a bylinné měšce. Její jemný dotek přinese okamžitou úlevu a relaxaci.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG ARTICLES -->
+    <section id="clanky" class="py-24 bg-white">
+        <div class="max-w-[1400px] mx-auto px-8 lg:px-20">
+            <div class="text-center mb-10 anim-fade-up">
+                <span class="text-gold font-semibold text-[11px] tracking-[0.2em] uppercase">Články & Tipy</span>
+                <h2 class="font-serif italic text-[2.5rem] lg:text-[3.2rem] text-charcoal mt-3 leading-tight">Inspirace
+                    pro vaši pohodu</h2>
+                <div class="w-16 h-[2px] bg-[#e6d0a7] mx-auto mt-6"></div>
+            </div>
+
+            <!-- Filter Tags -->
+            <div class="flex flex-wrap justify-center gap-3 mb-14 anim-fade-up">
+                <button onclick="filterArticles('all')"
+                    class="tag-pill active-filter px-5 py-2 rounded-full text-[12px] font-semibold tracking-wide border border-gold/30 bg-cream text-espresso">Vše</button>
+                <button onclick="filterArticles('masaze')"
+                    class="tag-pill px-5 py-2 rounded-full text-[12px] font-semibold tracking-wide border border-gold/30 bg-cream text-espresso">Masáže</button>
+                <button onclick="filterArticles('kosmetika')"
+                    class="tag-pill px-5 py-2 rounded-full text-[12px] font-semibold tracking-wide border border-gold/30 bg-cream text-espresso">Kosmetika</button>
+                <button onclick="filterArticles('wellness')"
+                    class="tag-pill px-5 py-2 rounded-full text-[12px] font-semibold tracking-wide border border-gold/30 bg-cream text-espresso">Wellness</button>
+                <button onclick="filterArticles('vlasy')"
+                    class="tag-pill px-5 py-2 rounded-full text-[12px] font-semibold tracking-wide border border-gold/30 bg-cream text-espresso">Vlasy</button>
+            </div>
+
+            <!-- Articles Grid -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Article 1 -->
+                <article class="blog-card bg-cream rounded-2xl overflow-hidden shadow-sm anim-fade-up cursor-pointer"
+                    data-category="masaze" onclick="openArticle(this)">
+                    <div class="h-[220px] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80"
+                            alt="Thajská masáž"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <span
+                            class="absolute top-4 left-4 bg-espresso/80 text-gold text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-sm">Masáže</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gold/70 text-[11px] tracking-[0.15em] uppercase font-semibold mb-2">8. března
+                            2026</p>
+                        <h3 class="font-serif text-xl text-charcoal mb-3 leading-snug">5 důvodů, proč si dopřát thajskou
+                            masáž pravidelně</h3>
+                        <p class="text-gray-400 text-[13.5px] leading-relaxed font-light mb-4">Thajská masáž není jen
+                            luxus — je to investice do zdraví. Uvolňuje svaly, zlepšuje krevní oběh, posiluje imunitu a
+                            snižuje hladinu stresových hormonů. Pravidelná masáž může zmírnit chronické bolesti zad a
+                            zlepšit kvalitu spánku.</p>
+                        <span class="text-gold text-[12px] font-semibold tracking-widest uppercase">Číst více →</span>
+                    </div>
+                    <div class="article-full hidden p-6 pt-0">
+                        <div class="w-full h-[1px] bg-gold/20 mb-5"></div>
+                        <div class="text-gray-500 text-[14px] leading-[1.9] font-light space-y-4">
+                            <p><strong class="text-charcoal">1. Uvolnění svalového napětí</strong> — Thajská masáž
+                                kombinuje akupresuru s protahováním, čímž účinně uvolňuje ztuhlé svaly a fascie. Je
+                                ideální pro lidi, kteří tráví hodiny u počítače.</p>
+                            <p><strong class="text-charcoal">2. Zlepšení flexibility</strong> — Během masáže je tělo
+                                jemně protahováno do různých pozic, což zvyšuje rozsah pohybu a pružnost kloubů.</p>
+                            <p><strong class="text-charcoal">3. Odbourání stresu</strong> — Pravidelná masáž snižuje
+                                hladinu kortizolu a stimuluje produkci endorfinů, přirozených „hormonů štěstí".</p>
+                            <p><strong class="text-charcoal">4. Podpora krevního oběhu</strong> — Tlakové techniky
+                                stimulují cirkulaci krve, což zlepšuje zásobení tkání kyslíkem a živinami.</p>
+                            <p><strong class="text-charcoal">5. Lepší spánek</strong> — Po masáži tělo přechází do stavu
+                                hluboké relaxace, což přirozeně podporuje kvalitní a regenerační spánek.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="blog-card bg-cream rounded-2xl overflow-hidden shadow-sm anim-fade-up cursor-pointer"
+                    data-category="kosmetika" onclick="openArticle(this)" style="transition-delay:0.1s">
+                    <div class="h-[220px] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80"
+                            alt="Péče o pleť"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <span
+                            class="absolute top-4 left-4 bg-espresso/80 text-gold text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-sm">Kosmetika</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gold/70 text-[11px] tracking-[0.15em] uppercase font-semibold mb-2">5. března
+                            2026</p>
+                        <h3 class="font-serif text-xl text-charcoal mb-3 leading-snug">Jak správně pečovat o pleť v
+                            zimních měsících</h3>
+                        <p class="text-gray-400 text-[13.5px] leading-relaxed font-light mb-4">Zima je pro pleť náročná
+                            — studený vítr, suché vytápěné prostory a nedostatek slunce. Přinášíme vám tipy, jak udržet
+                            pleť hydratovanou, zářivou a zdravou i v nejtužší zimě.</p>
+                        <span class="text-gold text-[12px] font-semibold tracking-widest uppercase">Číst více →</span>
+                    </div>
+                    <div class="article-full hidden p-6 pt-0">
+                        <div class="w-full h-[1px] bg-gold/20 mb-5"></div>
+                        <div class="text-gray-500 text-[14px] leading-[1.9] font-light space-y-4">
+                            <p><strong class="text-charcoal">Hydratace je základ</strong> — Používejte bohatší krémy s
+                                obsahem kyseliny hyaluronové a ceramidů. Lehké letní gely v zimě nestačí.</p>
+                            <p><strong class="text-charcoal">Nezapomínejte na SPF</strong> — UV záření působí i v zimě.
+                                Používejte krém s minimálně SPF 30 každý den.</p>
+                            <p><strong class="text-charcoal">Šetrné čištění</strong> — Vyměňte agresivní pěnivé gely za
+                                jemné čisticí mléko nebo olej, který pleť nevysušuje.</p>
+                            <p><strong class="text-charcoal">Pravidelný peeling</strong> — Jednou týdně používejte
+                                enzymatický peeling pro odstranění odumřelých buněk a podporu regenerace.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="blog-card bg-cream rounded-2xl overflow-hidden shadow-sm anim-fade-up cursor-pointer"
+                    data-category="wellness" onclick="openArticle(this)" style="transition-delay:0.2s">
+                    <div class="h-[220px] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1583416750470-965b2707b355?w=600&q=80" alt="Sauna"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <span
+                            class="absolute top-4 left-4 bg-espresso/80 text-gold text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-sm">Wellness</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gold/70 text-[11px] tracking-[0.15em] uppercase font-semibold mb-2">1. března
+                            2026</p>
+                        <h3 class="font-serif text-xl text-charcoal mb-3 leading-snug">Finská sauna: Tradice, která léčí
+                            tělo i mysl</h3>
+                        <p class="text-gray-400 text-[13.5px] leading-relaxed font-light mb-4">Saunování je starodávná
+                            finská tradice s prokazatelnými zdravotními benefity. Od detoxikace po posílení imunity —
+                            sauna je přirozený lék na moderní stres.</p>
+                        <span class="text-gold text-[12px] font-semibold tracking-widest uppercase">Číst více →</span>
+                    </div>
+                    <div class="article-full hidden p-6 pt-0">
+                        <div class="w-full h-[1px] bg-gold/20 mb-5"></div>
+                        <div class="text-gray-500 text-[14px] leading-[1.9] font-light space-y-4">
+                            <p><strong class="text-charcoal">Detoxikace organismu</strong> — Při saunování se tělo
+                                zbavuje toxinů prostřednictvím potu. Pravidelné návštěvy sauny podporují funkci ledvin a
+                                jater.</p>
+                            <p><strong class="text-charcoal">Posílení imunity</strong> — Střídání tepla a chladu
+                                stimuluje tvorbu bílých krvinek a posiluje přirozenou obranyschopnost organismu.</p>
+                            <p><strong class="text-charcoal">Relaxace nervového systému</strong> — Teplo sauny navozuje
+                                hluboký klid a pomáhá snižovat úzkost a napětí.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="blog-card bg-cream rounded-2xl overflow-hidden shadow-sm anim-fade-up cursor-pointer"
+                    data-category="vlasy" onclick="openArticle(this)">
+                    <div class="h-[220px] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80"
+                            alt="Kadeřnictví"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <span
+                            class="absolute top-4 left-4 bg-espresso/80 text-gold text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-sm">Vlasy</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gold/70 text-[11px] tracking-[0.15em] uppercase font-semibold mb-2">25. února
+                            2026</p>
+                        <h3 class="font-serif text-xl text-charcoal mb-3 leading-snug">Trendy účesy pro jaro 2026: Co
+                            letí a co vypadá skvěle</h3>
+                        <p class="text-gray-400 text-[13.5px] leading-relaxed font-light mb-4">Jaro přináší nové trendy
+                            — od přirozených vln po odvážné pixie střihy. Náš kadeřník Tomáš radí, jaký styl bude letos
+                            dominovat a komu se hodí.</p>
+                        <span class="text-gold text-[12px] font-semibold tracking-widest uppercase">Číst více →</span>
+                    </div>
+                    <div class="article-full hidden p-6 pt-0">
+                        <div class="w-full h-[1px] bg-gold/20 mb-5"></div>
+                        <div class="text-gray-500 text-[14px] leading-[1.9] font-light space-y-4">
+                            <p><strong class="text-charcoal">Přirozené vlny</strong> — Effortless waves jsou zpět. Lehce
+                                zvlněné vlasy dodají obličeji jemnost a přirozený šarm.</p>
+                            <p><strong class="text-charcoal">Mikro ofina</strong> — Odvážná mikro ofina je hit sezóny.
+                                Hodí se k výrazným rysům obličeje a dodává retro nádech.</p>
+                            <p><strong class="text-charcoal">Teplé blond tóny</strong> — Studené platiny ustupují teplým
+                                medovým a karamelových odstínům, které krásně rozzáří pleť.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="blog-card bg-cream rounded-2xl overflow-hidden shadow-sm anim-fade-up cursor-pointer"
+                    data-category="masaze" onclick="openArticle(this)" style="transition-delay:0.1s">
+                    <div class="h-[220px] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80"
+                            alt="Párová masáž"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <span
+                            class="absolute top-4 left-4 bg-espresso/80 text-gold text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-sm">Masáže</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gold/70 text-[11px] tracking-[0.15em] uppercase font-semibold mb-2">20. února
+                            2026</p>
+                        <h3 class="font-serif text-xl text-charcoal mb-3 leading-snug">Párová masáž jako dokonalý
+                            valentýnský dárek</h3>
+                        <p class="text-gray-400 text-[13.5px] leading-relaxed font-light mb-4">Hledáte originální dárek
+                            pro svou polovičku? Párová masáž je zážitek, na který se nezapomíná. Sdílená relaxace
+                            prohlubuje vztah a přináší společné chvíle klidu.</p>
+                        <span class="text-gold text-[12px] font-semibold tracking-widest uppercase">Číst více →</span>
+                    </div>
+                    <div class="article-full hidden p-6 pt-0">
+                        <div class="w-full h-[1px] bg-gold/20 mb-5"></div>
+                        <div class="text-gray-500 text-[14px] leading-[1.9] font-light space-y-4">
+                            <p><strong class="text-charcoal">Společný zážitek</strong> — Ležíte vedle sebe v klidném
+                                prostředí a užíváte si masáž synchronně. Je to intimní chvíle bez telefonů a rozptýlení.
+                            </p>
+                            <p><strong class="text-charcoal">Romantický balíček</strong> — V Golden Zen nabízíme
+                                speciální párový balíček zahrnující aromatickou olejovou masáž, šálek čaje a relaxaci v
+                                privátní sauně.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="blog-card bg-cream rounded-2xl overflow-hidden shadow-sm anim-fade-up cursor-pointer"
+                    data-category="wellness" onclick="openArticle(this)" style="transition-delay:0.2s">
+                    <div class="h-[220px] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80"
+                            alt="Wellness"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <span
+                            class="absolute top-4 left-4 bg-espresso/80 text-gold text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-sm">Wellness</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gold/70 text-[11px] tracking-[0.15em] uppercase font-semibold mb-2">15. února
+                            2026</p>
+                        <h3 class="font-serif text-xl text-charcoal mb-3 leading-snug">Digital detox: Proč si dopřát den
+                            bez telefonu ve spa</h3>
+                        <p class="text-gray-400 text-[13.5px] leading-relaxed font-light mb-4">V dnešní hyperkonektované
+                            době je odpojení od obrazovek klíčem k duševnímu zdraví. Wellness den bez telefonu může
+                            zázračně obnovit vaši energii.</p>
+                        <span class="text-gold text-[12px] font-semibold tracking-widest uppercase">Číst více →</span>
+                    </div>
+                    <div class="article-full hidden p-6 pt-0">
+                        <div class="w-full h-[1px] bg-gold/20 mb-5"></div>
+                        <div class="text-gray-500 text-[14px] leading-[1.9] font-light space-y-4">
+                            <p><strong class="text-charcoal">Snížení kortizolu</strong> — Studie ukazují, že pouhých 24
+                                hodin bez telefonu výrazně sníží hladinu stresového hormonu kortizolu.</p>
+                            <p><strong class="text-charcoal">Lepší přítomnost</strong> — Bez notifikací se plně ponoříte
+                                do wellness zážitku. Masáž, sauna a ticho — to je recept na skutečný odpočinek.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-charcoal text-white/60">
+        <div class="h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+        <div
+            class="max-w-[1400px] mx-auto px-8 lg:px-20 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-gold flex items-center gap-3">
+                <svg width="28" height="24" viewBox="0 0 100 100" class="fill-current">
+                    <path d="M15,40 L25,65 L35,45 L50,70 L65,45 L75,65 L85,40 L85,30 L15,30 Z" opacity="0.8" />
+                    <path
+                        d="M50,85 C30,85 20,70 20,50 C20,30 35,15 50,15 C60,15 70,20 75,30 L65,35 C60,28 55,25 50,25 C40,25 30,35 30,50 C30,65 40,75 50,75 C58,75 65,70 68,60 L50,60 L50,50 L80,50 C80,70 65,85 50,85 Z" />
+                </svg>
+                <span class="font-serif tracking-[0.15em] text-sm uppercase font-semibold">Golden Zen Spa</span>
+            </div>
+            <p class="text-white/30 text-sm">&copy; 2026 Golden Zen Spa. Všechna práva vyhrazena.</p>
+            <a href="goldenzen-upgraded.html"
+                class="text-gold text-sm font-semibold tracking-widest uppercase hover:text-white transition-colors">←
+                Zpět na hlavní web</a>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.anim-fade-up').forEach(el => observer.observe(el));
+
+        // Filter articles
+        function filterArticles(category) {
+            document.querySelectorAll('.tag-pill').forEach(btn => btn.classList.remove('active-filter'));
+            event.target.classList.add('active-filter');
+            document.querySelectorAll('#articles-grid article').forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = '';
+                    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+                } else {
+                    card.style.opacity = '0'; card.style.transform = 'translateY(20px)';
+                    setTimeout(() => { card.style.display = 'none'; }, 400);
+                }
+            });
+        }
+
+        // Open/close article detail
+        function openArticle(card) {
+            const full = card.querySelector('.article-full');
+            const btn = card.querySelector('.p-6 > span:last-child');
+            if (full.classList.contains('hidden')) {
+                full.classList.remove('hidden');
+                full.style.maxHeight = '0'; full.style.overflow = 'hidden'; full.style.transition = 'max-height 0.5s ease';
+                requestAnimationFrame(() => { full.style.maxHeight = full.scrollHeight + 'px'; });
+                btn.textContent = 'Skrýt ←';
+            } else {
+                full.style.maxHeight = '0';
+                btn.textContent = 'Číst více →';
+                setTimeout(() => { full.classList.add('hidden'); full.style.maxHeight = ''; }, 500);
+            }
+        }
+    </script>
+</body>
+
+</html>
